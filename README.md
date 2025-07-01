@@ -3,66 +3,41 @@
 THis is an issues collections about carla with Ubuntu 22.04
 </h1>
 
-> Towards High-Fidelity and Temporal-Consistency Generation for Radar Echo Perception Via Differential Diffusion Model
-> 
-> Junyi Li, Beibei Jin, Xiaohui Song, Jianye Wang, JinDong Li, Pengfei Zhang 
-
-[Paper]() | [Project Page](https://github.com/azier33/DDM/)
-
 ## 📌 Setup
-We test our code on Ubuntu 22.04 with a single RTX 4090 GPU.
+We try to install carla 0.9.13 on Ubuntu 22.04 with two RTX 4090 GPUs(48G).
 
 ### Environment 
+The firt steps is installing the python which version is compatable. The default python version of Ubuntu 22.04 is 3.10, but the carla 0.9.13 need python <= 3.9, So that we try to install python 3.9 firstly on the server and set the path.
 
-    git clone https://github.com/azier33/DDM.git
-    conda create -n DDM 
-    conda activate DDM
-    conda install -r requirements.txt
+We recommand to create an conda enviroment for the installation.
+    
+    conda create -n carla-py39 python=3.9
+    conda create carla-py39
+    
+When there is a limitation about user permitation, the correct approach is to modify the permissions of the corresponding folder use [chmod +x], do not to use [sudo] command.
 
-### Datasets
-We use the Sevirlr and MovingMnist datasets. See [dataset.md](./data/dataset.md) for detailed data structure.
+    chmod +x /path/to/limit
+    
+### Installation
+Try to clone the repositories from carla 0.9.13
 
-Please adjust the `dataset` folder path in training and test scripts.
+    git clone https://github.com/carla-simulator/carla.git
 
-## 📌 Training
-Train the DDM Diffusion.
-You can set dataset using `--dataset /path/to/sevir` or `--dataset path/to/MM`.
+Please adjust the version of carla.
 
-### Trianing
+The key step is transfer the link in the [./Update.sh], if there is an error aboult content is too old when running [make launch] command, you should use the link as follow
 
-    python script/Trainer_diff.py
+    CONTENT_LINK=https://carla-assets.s3.us-east-005.backblazeb2.com/${CONTENT_ID}.tar.gz
 
-If you want to train an no diff method ,you can user the command follow.
+Then you should compile the Python API client:
 
-    python scripts/Trainer_wo_diff.py
+    make PythonAPI ARGS="--python-version=3.9"
 
+## Usage
+Launch the UE4 by command:
+    cd ~/carla
+    make launch
 
-### Evaluation
-
-For evaluation for the diff generation,
-
-    python scripts/cal_diff_score.py
-
-For evaluation for the no_diff generation,
-
-    python scripts/cal_score.py
-
-## 📌 Visualizing
-![fig1](./data/Sevir/train_B0109_S436000_pred.gif)
-![fig2](./data/Sevir/train_B0119_S475000_pred.gif)
-![fig3](./data/Sevir/train_B0120_S476000_pred.gif)
-![fig4](./data/Sevir/train_B0121_S480000_pred.gif)
-
-To visualize the generation which obtain from model that we pre-trained,
-
-    python scripts/cal_score.py
-
-## 📌 Dataset
-You can download the dataset that we used in the DDM samed to the [Prediff](https://github.com/gaozhihan/PreDiff) used. 
-
-## Acknowledgement
-The code is partly based on [video-diffusion-pytorch](https://github.com/lucidrains/video-diffusion-pytorch), [Diffuser](https://github.com/huggingface/diffusers) and [Prediff](https://github.com/gaozhihan/PreDiff). 
-
-## 📌 License
-
-This project is released under the MIT License.
+click the [play] button and then run an example: 
+    cd ~/carla/PythonAPI/examples
+    python3 manual_control.py
