@@ -51,4 +51,4 @@ When facing error like:
     Exception thrown: bind: Address already in use Signal 11 caught
 
 In addition to the solution to the port occupation problem, you can also switch the running mode of the UE4 editor to temporarily solve the problem. As shown in the figure below, change to the second startup method：
-![fig1](./images/address_error.png)
+![fig1](./images/addres_error.png)
