@@ -35,9 +35,20 @@ Then you should compile the Python API client:
 
 ## Usage
 Launch the UE4 by command:
+
+    conda activate carla-py39
     cd ~/carla
     make launch
 
 click the [play] button and then run an example: 
+
     cd ~/carla/PythonAPI/examples
     python3 manual_control.py
+
+## Issues
+When facing error like:
+
+    Exception thrown: bind: Address already in use Signal 11 caught
+
+In addition to the solution to the port occupation problem, you can also switch the running mode of the UE4 editor to temporarily solve the problem. As shown in the figure below, change to the second startup method：
+![fig1](./images/address_error.png)
